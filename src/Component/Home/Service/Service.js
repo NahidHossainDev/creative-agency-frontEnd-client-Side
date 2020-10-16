@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ServiceCard from "./ServiceCard";
 import { useEffect } from "react";
-import loadingGif from '../../images/images/01-progress.gif'
+import loadingGif from "../../images/images/01-progress.gif";
 const Service = () => {
   const [servicesData, setServicesData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/getServices")
+    fetch("https://pure-cliffs-89224.herokuapp.com/getServices")
       .then((res) => res.json())
       .then((data) => setServicesData(data));
   }, []);
@@ -17,7 +17,11 @@ const Service = () => {
       </h2>
       <div className="row d-flex justify-content-center">
         {servicesData.length === 0 && (
-          <img src={loadingGif} style={{ width: "300px",textAlign:"center" }} alt="" />
+          <img
+            src={loadingGif}
+            style={{ width: "300px", textAlign: "center" }}
+            alt=""
+          />
         )}
         {servicesData.map((d, i) => (
           <ServiceCard

@@ -8,33 +8,30 @@ const MakeAdmin = () => {
 
   setPanelName("Make Admin");
 
-   const handleOnChange = (e) => {
-     const newInfo = { ...info };
-     newInfo[e.target.name] = e.target.value;
-     setInfo(newInfo);
-   };
-  
+  const handleOnChange = (e) => {
+    const newInfo = { ...info };
+    newInfo[e.target.name] = e.target.value;
+    setInfo(newInfo);
+  };
+
   const handleSubmit = () => {
-     fetch("http://localhost:8000/addAdmin", {
-       method: "POST",
-       body: JSON.stringify(info),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8",
-       },
-     })
-       .then((res) => res.json())
-       .then((data) => {
-         if (data) {
-           alert("Admin addaded successfully.");
-         }
-       });
-  }
+    fetch("https://pure-cliffs-89224.herokuapp.com/addAdmin", {
+      method: "POST",
+      body: JSON.stringify(info),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          alert("Admin addaded successfully.");
+        }
+      });
+  };
   return (
     <Panel>
-      <form
-        onSubmit={handleSubmit}
-        className="make-admin"
-      >
+      <form onSubmit={handleSubmit} className="make-admin">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import clint1 from "../../images/images/customer-1.png"
-import clint2 from "../../images/images/customer-2.png"
-import clint3 from "../../images/images/customer-3.png"
-import ReviewCard from './ReviewCard';
+import React, { useState, useEffect } from "react";
+import clint1 from "../../images/images/customer-1.png";
+import clint2 from "../../images/images/customer-2.png";
+import clint3 from "../../images/images/customer-3.png";
+import ReviewCard from "./ReviewCard";
 
 // const reviewData = [
 //   {
@@ -27,24 +27,29 @@ import ReviewCard from './ReviewCard';
 const Review = () => {
   const [reviewData, setReviewData] = useState([]);
 
-   useEffect(() => {
-     fetch("http://localhost:8000/showReviews")
-       .then((res) => res.json())
-       .then((data) => setReviewData(data));
-   }, []);
-  
-    return (
-      <section className="container">
-        <h2 className="pb-5 text-center">
-          Clients <span style={{ color: "#7AB259" }}>Feedback</span>
-        </h2>
-        <div className="row d-flex justify-content-center">
-          {reviewData.map((d) => (
-            <ReviewCard img={d.img} name={d.name} text={d.comment} designation={d.designation}/>
-          ))}
-        </div>
-      </section>
-    );
+  useEffect(() => {
+    fetch("https://pure-cliffs-89224.herokuapp.com/showReviews")
+      .then((res) => res.json())
+      .then((data) => setReviewData(data));
+  }, []);
+
+  return (
+    <section className="container">
+      <h2 className="pb-5 text-center">
+        Clients <span style={{ color: "#7AB259" }}>Feedback</span>
+      </h2>
+      <div className="row d-flex justify-content-center">
+        {reviewData.map((d) => (
+          <ReviewCard
+            img={d.img}
+            name={d.name}
+            text={d.comment}
+            designation={d.designation}
+          />
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default Review;
