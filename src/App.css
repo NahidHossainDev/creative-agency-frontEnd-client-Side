@@ -165,3 +165,10 @@ width:450px;
   width: 30px;
   margin-right: 50px;
 }
+.dropdownItem{
+  padding: 0;
+}
+.dropdownItem p{
+  margin: 0px 0px;
+  padding: 5px;
+}

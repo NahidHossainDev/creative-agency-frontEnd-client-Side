@@ -30,7 +30,6 @@ const Login = () => {
       .auth()
       .signInWithPopup(provider)
       .then(function (result) {
-        console.log(result.user);
         const { displayName, email, photoURL } = result.user;
         const signInInfo = {
           name: displayName,
@@ -78,7 +77,6 @@ const Login = () => {
   };
 
   const checkAdmin = (email) => {
-    console.log({ email: email });
     fetch("https://pure-cliffs-89224.herokuapp.com/checkAdmin", {
       method: "POST",
       headers: {

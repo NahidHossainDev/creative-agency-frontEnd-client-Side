@@ -1,39 +1,44 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import loadingGif from "../../../images/images/01-progress.gif";
+import { ContextElement } from "../../../../App";
 const Table = () => {
+  const [panelName, setPanelName] = useContext(ContextElement);
+
+  setPanelName("Service List");
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
+  const showData = () => {
     fetch("https://pure-cliffs-89224.herokuapp.com/showOrders")
       .then((res) => res.json())
       .then((data) => setOrders(data));
-  }, []);
+  }
+  showData();
+ 
+  const updateStatus = (id, val) => {
+    setOrders([])
+    console.log(id, val)
+    const status = {status:val}
+      fetch(`https://pure-cliffs-89224.herokuapp.com/update/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(status),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            showData();
+          }
+        });
+  }
 
-  const checkStatus1 = (status) => {
-    if (status === "Pending") {
-      return "On going";
-    }
-    if (status === "On going") {
-      return "Done";
-    }
-    if (status === "Done") {
-      return "Pending";
-    }
-  };
-  const checkStatus2 = (status) => {
-    if (status === "Pending") {
-      return "Done";
-    }
-    if (status === "On going") {
-      return "Pending";
-    }
-    if (status === "Done") {
-      return "On going";
-    }
-  };
+    const sColor = (status) => {
+      if (status === "Done") { return "#009444"; }
+      if (status === "Pending") {return "red"}
+      if (status === "On going") { return "orange"}
+  }
+  
   return (
     <table class="table table-borderless bg-light">
       <thead>
@@ -60,13 +65,16 @@ const Table = () => {
             <td>{d.title}</td>
             <td>{d.projectDetail}</td>
             <td>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+              <Dropdown
+                onSelect={(option) => updateStatus(`${d._id}`, option)}
+              >
+                <Dropdown.Toggle variant="light" id="dropdown-basic"  style={{color: sColor(d.status)}}>
                   {d.status}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>{checkStatus1(d.status)}</Dropdown.Item>
-                  <Dropdown.Item>{checkStatus2(d.status)}</Dropdown.Item>
+                  <Dropdown.Item eventKey="Done" style={{color:'green'}}>Done</Dropdown.Item>
+                  <Dropdown.Item eventKey="On going" style={{color:'orange'}}>On going</Dropdown.Item>
+                  <Dropdown.Item eventKey="Pending" style={{color:'red'}}>Pending</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </td>
