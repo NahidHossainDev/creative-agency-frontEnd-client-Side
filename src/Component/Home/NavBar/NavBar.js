@@ -3,7 +3,7 @@ import logo from '../../images/images/logos/logo.png'
 import { Link } from 'react-router-dom';
 import { ContextElement } from '../../../App';
 const NavBar = () => {
-    const [panelName, setPanelName, userLoginInfo] = useContext(ContextElement)
+    const [panelName, setPanelName, userLoginInfo, admin, setAdmin,] = useContext(ContextElement)
     return (
       <div className="container">
         <nav
@@ -49,15 +49,34 @@ const NavBar = () => {
               </li>
             </ul>
 
-            <Link to="/login">
-              {userLoginInfo.loginStatus ? (
-                <h6>{userLoginInfo.name}</h6>
+            {userLoginInfo.loginStatus ? (
+              admin ? (
+                <div className="d-flex">
+                  <Link to="/adminServiceList">
+                    <button
+                      className="btn my-1 my-sm-0  btn-dark"
+                      type="submit"
+                    >
+                      {" "}
+                      Go Admin panel
+                    </button>
+                  </Link>
+                  <Link to="/login">
+                    <h6>{userLoginInfo.name}</h6>
+                  </Link>
+                </div>
               ) : (
+                <Link to="/login">
+                  <h5>{userLoginInfo.name}</h5>
+                </Link>
+              )
+            ) : (
+              <Link to="/login">
                 <button className="btn my-2 my-sm-0  btn-dark" type="submit">
                   Log in
                 </button>
-              )}
-            </Link>
+              </Link>
+            )}
           </div>
         </nav>
       </div>
