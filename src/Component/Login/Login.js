@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import * as firebase from "firebase/app";
-import firebaseConfig from "../firebase.config";
+import firebaseConfig from "../../firebase.config";
 import "firebase/auth";
 import "firebase/firestore";
 import { ContextElement } from "../../App";

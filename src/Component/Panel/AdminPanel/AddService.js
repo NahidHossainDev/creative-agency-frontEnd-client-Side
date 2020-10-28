@@ -21,6 +21,7 @@ const AddService = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
     formData.append("description", info.description);
